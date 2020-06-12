@@ -98,15 +98,12 @@ client.on("message", async (message) => {
 
     let command = message.content.split(" ")[0].toLowerCase().substr(prefix.length);
 
-    if (command == "say") {
-        // Post command
-        statcord.postCommand("say", message.author.id);
+    // Post command
+    statcord.postCommand(command, message.author.id);
 
+    if (command == "say") {
         message.channel.send("say");
     } else if (command == "help") {
-        // Post command
-        statcord.postCommand("help", message.author.id);
-
         message.channel.send("help");
     } else if (command == "post") {
         // Only owner runs this command
@@ -170,15 +167,12 @@ client.login("TOKEN");
 
         let command = message.content.split(" ")[0].toLowerCase().substr(prefix.length);
 
-        if (command == "say") {
-            // Post command
-            Statcord.ShardingClient.postCommand("say", message.author.id, client);
+        // Post command
+        Statcord.ShardingClient.postCommand(command, message.author.id, client);
 
+        if (command == "say") {
             message.channel.send("say");
         } else if (command == "help") {
-            // Post command
-            Statcord.ShardingClient.postCommand("help", message.author.id, client);
-
             message.channel.send("help");
         } else if (command == "post") {
             // Only owner runs this command
