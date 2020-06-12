@@ -73,6 +73,9 @@ const client = new Discord.Client();
 // Create statcord client
 const statcord = new Statcord.Client("statcord.com-APIKEY", client);
 
+// Client prefix
+const prefix = "cs!";
+
 client.on("ready", async () => {
     console.log("ready");
 
@@ -91,19 +94,21 @@ client.on("message", async (message) => {
     if (message.author.bot) return;
     if (message.channel.type !== "text") return;
 
-    let command = message.content.split(" ")[0].toLowerCase();
+    if (!message.content.startsWith(prefix)) return;
 
-    if (command == "cs!say") {
+    let command = message.content.split(" ")[0].toLowerCase().substr(prefix.length);
+
+    if (command == "say") {
         // Post command
         statcord.postCommand("say", message.author.id);
 
         message.channel.send("say");
-    } else if (command == "cs!help") {
+    } else if (command == "help") {
         // Post command
         statcord.postCommand("help", message.author.id);
 
         message.channel.send("help");
-    } else if (command == "cs!post") {
+    } else if (command == "post") {
         // Only owner runs this command
         if (message.author.id !== "bot_owner_id") return;
 
@@ -150,28 +155,32 @@ client.login("TOKEN");
     because it has already been made in the sharding script
     */
 
+   // Client prefix
+   const prefix = "cs!";
+
     client.on("ready", async () => {
         console.log("ready");
     });
-
 
     client.on("message", async (message) => {
         if (message.author.bot) return;
         if (message.channel.type !== "text") return;
 
-        let command = message.content.split(" ")[0].toLowerCase();
+        if (!message.content.startsWith(prefix)) return;
 
-        if (command == "cs!say") {
+        let command = message.content.split(" ")[0].toLowerCase().substr(prefix.length);
+
+        if (command == "say") {
             // Post command
             Statcord.ShardingClient.postCommand("say", message.author.id, client);
 
             message.channel.send("say");
-        } else if (command == "cs!help") {
+        } else if (command == "help") {
             // Post command
             Statcord.ShardingClient.postCommand("help", message.author.id, client);
 
             message.channel.send("help");
-        } else if (command == "cs!post") {
+        } else if (command == "post") {
             // Only owner runs this command
             if (message.author.id !== "bot_owner_id") return;
 
